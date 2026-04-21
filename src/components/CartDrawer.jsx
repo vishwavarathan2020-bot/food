@@ -1,68 +1,141 @@
-import React from 'react';
-import { ShoppingCart, X } from 'lucide-react';
-import axios from 'axios';
+import React, { useMemo, useState } from 'react';
+import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
+import { apiClient } from '../api';
 
-const CartDrawer = ({ isOpen, onClose, cart, clearCart }) => {
-  if (!isOpen) return null;
+const CartDrawer = ({
+  isOpen,
+  onClose,
+  cart,
+  clearCart,
+  onUpdateQuantity,
+  onUpdateMessage,
+  onRemoveItem,
+}) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderMessage, setOrderMessage] = useState("");
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  const totalAmount = useMemo(
+    () => cart.reduce((total, item) => total + item.price * item.quantity, 0),
+    [cart]
+  );
+
+  if (!isOpen) {
+    return null;
+  }
 
   const handleCheckout = async () => {
-    try {
-      const data = {
-        items: cart,
-        totalAmount: total
-      };
-      const response = await axios.post('http://localhost:5000/api/orders', data);
+    if (cart.length === 0 || isSubmitting) {
+      return;
+    }
 
-      if (response.status === 200 || response.status === 201) {
-        alert("Success: Your delicious order has been sent to the backend database! 🎉");
-        clearCart();
-        onClose();
-      } else {
-        alert("Failed to submit order. Please check the backend.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error hitting backend: Make sure your new Node Express server is running on port 5000!");
+    setIsSubmitting(true);
+    setOrderMessage("");
+
+    try {
+      await apiClient.post('/orders', {
+        items: cart.map(({ id, name, price, quantity, message }) => ({
+          id,
+          name,
+          price,
+          quantity,
+          message,
+        })),
+        totalAmount,
+      });
+
+      clearCart();
+      setOrderMessage("Order placed successfully.");
+    } catch (error) {
+      console.error("Checkout failed:", error);
+      setOrderMessage("Could not place order. Please start the server and try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="explosive-cart-overlay" onClick={onClose}>
-      <div className="explosive-cart-drawer" onClick={e => e.stopPropagation()}>
+      <aside
+        className="explosive-cart-drawer"
+        onClick={(event) => event.stopPropagation()}
+        aria-label="Shopping cart"
+      >
         <div className="explosive-cart-header">
-          <h2><ShoppingCart size={28} strokeWidth={3} /> Your Cart</h2>
-          <button className="explosive-close-btn" onClick={onClose}><X size={24} strokeWidth={3} /></button>
+          <h2>
+            <ShoppingBag size={28} strokeWidth={3} />
+            Cart
+          </h2>
+          <button className="explosive-close-btn" onClick={onClose} aria-label="Close cart">
+            <X size={22} strokeWidth={3} />
+          </button>
         </div>
 
         <div className="explosive-cart-body">
           {cart.length === 0 ? (
-            <div className="explosive-cart-empty">Your cart is empty. Add some food!</div>
+            <p className="explosive-cart-empty">
+              {orderMessage || "Your cart is empty."}
+            </p>
           ) : (
-            cart.map((item, idx) => (
-              <div key={idx} className="explosive-cart-item">
+            cart.map((item) => (
+              <div key={item.id} className="explosive-cart-item">
                 <div className="explosive-cart-item-info">
                   <h4>{item.name}</h4>
-                  <span>${item.price.toFixed(2)}</span>
+                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+
+                  <div className="explosive-cart-controls">
+                    <button
+                      type="button"
+                      onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                      aria-label={`Decrease ${item.name} quantity`}
+                    >
+                      <Minus size={16} strokeWidth={3} />
+                    </button>
+                    <strong>{item.quantity}</strong>
+                    <button
+                      type="button"
+                      onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                      aria-label={`Increase ${item.name} quantity`}
+                    >
+                      <Plus size={16} strokeWidth={3} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onRemoveItem(item.id)}
+                      aria-label={`Remove ${item.name}`}
+                    >
+                      <Trash2 size={16} strokeWidth={3} />
+                    </button>
+                  </div>
+
+                  <textarea
+                    placeholder="Add instruction"
+                    value={item.message || ""}
+                    onChange={(event) => onUpdateMessage(item.id, event.target.value)}
+                    className="explosive-cart-message"
+                  />
                 </div>
               </div>
             ))
           )}
         </div>
 
-        {cart.length > 0 && (
-          <div className="explosive-cart-footer">
-            <div className="explosive-cart-total">
-              <span>Total:</span>
-              <span>${total.toFixed(2)}</span>
-            </div>
-            <button className="explosive-checkout-btn" onClick={() => handleCheckout()}>
-              Place Order securely
-            </button>
+        <div className="explosive-cart-footer">
+          {orderMessage && cart.length > 0 && (
+            <p className="explosive-cart-status">{orderMessage}</p>
+          )}
+          <div className="explosive-cart-total">
+            <span>Total</span>
+            <span>${totalAmount.toFixed(2)}</span>
           </div>
-        )}
-      </div>
+          <button
+            className="explosive-checkout-btn"
+            onClick={handleCheckout}
+            disabled={cart.length === 0 || isSubmitting}
+          >
+            {isSubmitting ? "Placing..." : "Checkout"}
+          </button>
+        </div>
+      </aside>
     </div>
   );
 };

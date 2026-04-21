@@ -13,7 +13,45 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleAddToCart = (item) => {
-    setCart([...cart, item]);
+    setCart((currentCart) => {
+      const existingItem = currentCart.find((cartItem) => cartItem.id === item.id);
+
+      if (existingItem) {
+        return currentCart.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+      }
+
+      return [...currentCart, { ...item, quantity: 1, message: "" }];
+    });
+
+    setIsCartOpen(true);
+  };
+
+  const handleUpdateQuantity = (itemId, nextQuantity) => {
+    setCart((currentCart) => {
+      if (nextQuantity < 1) {
+        return currentCart.filter((item) => item.id !== itemId);
+      }
+
+      return currentCart.map((item) =>
+        item.id === itemId ? { ...item, quantity: nextQuantity } : item
+      );
+    });
+  };
+
+  const handleUpdateMessage = (itemId, message) => {
+    setCart((currentCart) =>
+      currentCart.map((item) =>
+        item.id === itemId ? { ...item, message } : item
+      )
+    );
+  };
+
+  const handleRemoveItem = (itemId) => {
+    setCart((currentCart) => currentCart.filter((item) => item.id !== itemId));
   };
 
   return (
@@ -24,7 +62,10 @@ export default function App() {
         isOpen={isCartOpen} 
         onClose={() => setIsCartOpen(false)} 
         cart={cart} 
-        clearCart={() => setCart([])} 
+        clearCart={() => setCart([])}
+        onUpdateQuantity={handleUpdateQuantity}
+        onUpdateMessage={handleUpdateMessage}
+        onRemoveItem={handleRemoveItem}
       />
 
       <main>
