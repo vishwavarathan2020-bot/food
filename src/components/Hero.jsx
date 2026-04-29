@@ -34,18 +34,41 @@ const Hero = () => (
       
       {/* Right Image Area */}
       <div className="explosive-hero-visuals">
-        <div className="explosive-hero-image-wrapper">
-          <img 
-            src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1200" 
-            alt="Delicious spread of food" 
-            className="explosive-hero-image"
-          />
-          {/* Dynamic Floating Element */}
-          <div className="explosive-floating-card">
-            <div className="explosive-pulse-dot"></div>
-            <div>
-              <p className="explosive-float-title">Hot & Fresh</p>
-              <p className="explosive-float-sub">Delivering right now</p>
+        <div className="explosive-hero-images-grid">
+          <div className="explosive-hero-image-wrapper explosive-hero-image-main">
+            <img
+              src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&q=80&w=800"
+              alt="Gourmet burger with fries"
+              className="explosive-hero-image"
+              onError={(e) => {
+                e.target.src = "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800";
+              }}
+            />
+            {/* Dynamic Floating Element */}
+            <div className="explosive-floating-card">
+              <div className="explosive-pulse-dot"></div>
+              <div>
+                <p className="explosive-float-title">Hot & Fresh</p>
+                <p className="explosive-float-sub">Delivering right now</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="explosive-hero-image-wrapper explosive-hero-image-secondary">
+            <img
+              src="https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&q=80&w=800"
+              alt="Colorful salad bowl"
+              className="explosive-hero-image"
+              onError={(e) => {
+                e.target.src = "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=800";
+              }}
+            />
+            <div className="explosive-floating-card explosive-floating-card-secondary">
+              <div className="explosive-pulse-dot"></div>
+              <div>
+                <p className="explosive-float-title">Premium Quality</p>
+                <p className="explosive-float-sub">Fresh ingredients</p>
+              </div>
             </div>
           </div>
         </div>

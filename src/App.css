@@ -824,6 +824,15 @@
   animation: slide-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
 }
 
+.explosive-hero-images-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
 .explosive-hero-image-wrapper {
   position: relative;
   border-radius: 2rem;
@@ -833,13 +842,22 @@
   box-shadow: 15px 15px 0px 0px var(--primary);
   background: black;
   display: inline-block;
-  transform: rotate(2deg);
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.explosive-hero-image-main {
+  transform: rotate(2deg);
+}
+
+.explosive-hero-image-secondary {
+  transform: rotate(-2deg);
+  margin-top: 2rem;
 }
 
 .explosive-hero-image {
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
+  max-height: 320px;
   height: auto;
   border-radius: 1.5rem;
   object-fit: cover;
@@ -847,8 +865,9 @@
   display: block;
 }
 
-.explosive-hero-image-wrapper:hover .explosive-hero-image {
-  transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+.explosive-hero-image-secondary .explosive-hero-image {
+  max-width: 380px;
+  max-height: 270px;
 }
 
 .explosive-floating-card {
@@ -868,9 +887,31 @@
   transform: rotate(-3deg);
 }
 
+.explosive-floating-card-secondary {
+  position: absolute;
+  bottom: 1.5rem;
+  right: -3rem;
+  background: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border: 4px solid black;
+  box-shadow: 8px 8px 0px 0px var(--primary);
+  animation: float-card-secondary 4.5s ease-in-out infinite;
+  z-index: 20;
+  transform: rotate(2deg);
+}
+
 @keyframes float-card {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-15px) rotate(-3deg); }
+}
+
+@keyframes float-card-secondary {
+  0%, 100% { transform: translateY(0) rotate(2deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
 }
 
 .explosive-pulse-dot {
@@ -918,22 +959,40 @@
     text-align: center;
     gap: 3rem;
   }
-  
+
   .explosive-hero-content {
     align-items: center;
   }
-  
+
   .explosive-subtitle {
     max-width: 100%;
   }
-  
+
   .explosive-ctas {
     justify-content: center;
   }
-  
+
+  .explosive-hero-images-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .explosive-hero-image-main,
+  .explosive-hero-image-secondary {
+    margin-left: 0;
+    transform: rotate(0deg);
+  }
+
   .explosive-floating-card {
-    left: 2rem;
-    bottom: -2rem;
+    left: 1rem;
+    bottom: -1rem;
+    transform: rotate(0deg);
+  }
+
+  .explosive-floating-card-secondary {
+    right: 1rem;
+    bottom: -1rem;
+    transform: rotate(0deg);
   }
 }
 
