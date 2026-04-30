@@ -1477,6 +1477,9 @@
   justify-content: space-between;
   align-items: center;
   background: #ffeb3b;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .explosive-cart-header h2 {
@@ -1494,8 +1497,8 @@
   background: white;
   border: 3px solid black;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1503,6 +1506,8 @@
   cursor: pointer;
   box-shadow: 3px 3px 0px 0px black;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  position: relative;
 }
 
 .explosive-close-btn:hover {
@@ -1536,6 +1541,528 @@
   border: 4px dashed #cbd5e1;
   padding: 2rem;
   border-radius: 1rem;
+}
+
+/* Explosive Checkout Styles */
+.explosive-checkout-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  padding-top: 160px; /* Add space for fixed header - increased from 120px */
+}
+
+.explosive-checkout-container h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: black;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.explosive-checkout-section {
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background: #f8fafc;
+  border: 3px solid black;
+  border-radius: 1.5rem;
+  box-shadow: 6px 6px 0px 0px black;
+}
+
+.explosive-section-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: black;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.explosive-branches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.explosive-branch-card {
+  padding: 1.5rem;
+  background: white;
+  border: 3px solid black;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  transform: rotate(-1deg);
+  box-shadow: 4px 4px 0px 0px black;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.explosive-branch-card:hover {
+  transform: rotate(0deg) translateY(-5px);
+  box-shadow: 8px 8px 0px 0px black;
+}
+
+.explosive-branch-card.selected {
+  background: linear-gradient(135deg, #ffeb3b 0%, #ffd700 100%);
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 8px 8px 0px 0px black;
+}
+
+.explosive-branch-card h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: black;
+  margin-top: 0.5rem;
+}
+
+.explosive-branch-card p {
+  font-size: 0.9rem;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.explosive-checkmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: #4CAF50;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 900;
+  font-size: 1.2rem;
+  box-shadow: 3px 3px 0px 0px black;
+}
+
+.explosive-input {
+  width: 100%;
+  padding: 1rem;
+  border: 3px solid black;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: white;
+  box-shadow: 3px 3px 0px 0px black;
+  transition: all 0.3s ease;
+}
+
+.explosive-input:focus {
+  outline: none;
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px 0px black;
+}
+
+.explosive-voucher-input-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.explosive-voucher-input-group .explosive-input {
+  flex: 1;
+  margin: 0;
+}
+
+.explosive-apply-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: white;
+  border: 3px solid black;
+  border-radius: 0.75rem;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px 0px black;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.explosive-apply-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px 0px black;
+}
+
+.explosive-apply-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px black;
+}
+
+.explosive-voucher-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid black;
+  border-radius: 2rem;
+  font-weight: 800;
+  box-shadow: 4px 4px 0px 0px black;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
+
+.explosive-discount {
+  background: white;
+  color: #ff6b35;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 900;
+  border: 1px solid #ff6b35;
+}
+
+.explosive-voucher-list {
+  margin-top: 1.5rem;
+}
+
+.explosive-voucher-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: black;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.explosive-voucher-option {
+  width: 100%;
+  padding: 1rem;
+  background: white;
+  border: 2px solid black;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 3px 3px 0px 0px black;
+}
+
+.explosive-voucher-option:hover {
+  transform: translateX(5px);
+  box-shadow: 5px 5px 0px 0px black;
+  background: #ffeb3b;
+}
+
+.explosive-voucher-code {
+  font-weight: 900;
+  color: #ff6b35;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.explosive-voucher-desc {
+  color: #4b5563;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.explosive-payment-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.explosive-payment-option {
+  padding: 1.5rem;
+  background: white;
+  border: 3px solid black;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-weight: 600;
+  box-shadow: 4px 4px 0px 0px black;
+  transform: rotate(-1deg);
+  position: relative;
+  color: black;
+}
+
+.explosive-payment-option:hover {
+  transform: rotate(0deg) translateY(-5px);
+  box-shadow: 6px 6px 0px 0px black;
+}
+
+.explosive-payment-option.selected {
+  background: linear-gradient(135deg, #ffeb3b 0%, #ffd700 100%);
+  transform: rotate(0deg) scale(1.02);
+  box-shadow: 6px 6px 0px 0px black;
+  border-color: #ff6b35;
+}
+
+.explosive-payment-option svg {
+  flex-shrink: 0;
+  color: #ff6b35;
+}
+
+.explosive-payment-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.explosive-payment-name {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: black;
+  text-transform: uppercase;
+}
+
+.explosive-payment-desc {
+  font-size: 0.85rem;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.explosive-payment-option svg:last-child {
+  color: #4CAF50;
+  flex-shrink: 0;
+}
+
+.explosive-summary-table {
+  background: white;
+  border: 2px solid black;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.explosive-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 2px solid #f1f5f9;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.explosive-summary-row:last-child {
+  border-bottom: none;
+}
+
+.explosive-discount-row {
+  color: #4CAF50;
+  font-weight: 700;
+}
+
+.explosive-total-row {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: black;
+  border-top: 2px solid black;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+.explosive-place-order-btn {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border: 3px solid black;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 6px 6px 0px 0px black;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+}
+
+.explosive-place-order-btn:hover:not(:disabled) {
+  transform: translateY(-5px) rotate(2deg);
+  box-shadow: 10px 10px 0px 0px black;
+}
+
+.explosive-place-order-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Order Confirmation Styles */
+.explosive-order-confirmation {
+  padding: 3rem;
+  background: white;
+  border-radius: 2rem;
+  border: 3px solid black;
+  box-shadow: 8px 8px 0px 0px black;
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.explosive-order-confirmation h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #4CAF50;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.explosive-order-tracking {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: #f8fafc;
+  border: 3px solid black;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0px 0px black;
+}
+
+.explosive-order-tracking h3 {
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.explosive-status-steps {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.explosive-status-steps::before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  right: 60px;
+  height: 3px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.explosive-status-steps::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  height: 3px;
+  background: #4CAF50;
+  z-index: 2;
+  transition: width 0.5s ease;
+  width: calc((100% - 120px) * var(--progress, 0));
+}
+
+.explosive-status-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0.4;
+  transition: all 0.5s ease;
+  min-width: 120px;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+}
+
+.explosive-status-step.active {
+  opacity: 1;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border-color: #4CAF50;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.explosive-status-step.active {
+  opacity: 1;
+}
+
+.explosive-status-icon {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border: 3px solid black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  box-shadow: 3px 3px 0px 0px black;
+  transition: all 0.3s ease;
+}
+
+.explosive-status-step.active .explosive-status-icon {
+  background: white;
+  color: #4CAF50;
+  box-shadow: 5px 5px 0px 0px black;
+  border-color: white;
+}
+
+.explosive-status-step span {
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.explosive-order-details {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: white;
+  border: 2px solid black;
+  border-radius: 1rem;
+  text-align: left;
+}
+
+.explosive-order-details h3 {
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.explosive-order-details p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+.explosive-close-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #ffeb3b 0%, #ffd700 100%);
+  color: black;
+  border: 3px solid black;
+  border-radius: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 5px 5px 0px 0px black;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+.explosive-close-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 7px 7px 0px 0px black;
+}
   transform: rotate(-1deg);
 }
 

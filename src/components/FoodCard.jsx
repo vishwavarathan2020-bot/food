@@ -46,9 +46,9 @@ const FoodCard = ({ item, onAdd }) => {
                   color={(hoverRating > 0 ? index < hoverRating : index < filledStars) ? '#ffb703' : '#cbd5e1'}
                   strokeWidth={2}
                   className="explosive-rating-star"
-                  onMouseEnter={() => setHoverRating(index + 1)}
+                  onMouseEnter={() => setHoverRating(index + 11)}
                   onMouseLeave={() => setHoverRating(0)}
-                  onClick={() => handleRatingClick(index + 1)}
+                  onClick={() => handleRatingClick(index + 11)}
                   style={{ cursor: 'pointer' }}
                 />
               ))}

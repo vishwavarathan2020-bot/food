@@ -10,6 +10,7 @@ const CartDrawer = ({
   onUpdateQuantity,
   onUpdateMessage,
   onRemoveItem,
+  onCheckout,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderMessage, setOrderMessage] = useState("");
@@ -25,6 +26,12 @@ const CartDrawer = ({
 
   const handleCheckout = async () => {
     if (cart.length === 0 || isSubmitting) {
+      return;
+    }
+
+    // If onCheckout prop is provided, use it to navigate to checkout page
+    if (onCheckout) {
+      onCheckout();
       return;
     }
 
